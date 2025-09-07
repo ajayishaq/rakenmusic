@@ -1,0 +1,46 @@
+:root {
+    --background: hsl(0, 0%, 7%);
+    --foreground: hsl(0, 0%, 100%);
+    --primary: hsl(141, 76%, 48%);
+    --card: hsl(0, 0%, 12%);
+    --border: hsl(0, 0%, 20%);
+    --muted: hsl(0, 0%, 20%);
+    --muted-foreground: hsl(0, 0%, 70%);
+    --mood-happy: hsl(45, 93%, 58%);
+    --mood-sad: hsl(217, 91%, 60%);
+    --mood-chill: hsl(271, 81%, 66%);
+    --mood-energetic: hsl(25, 95%, 53%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hover-lift {
+    transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
