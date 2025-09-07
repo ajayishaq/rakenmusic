@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>raken - Sort your music by mood</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Dark Theme */
+        :root {
+            --background: hsl(0, 0%, 7%); /* #121212 */
+            --foreground: hsl(0, 0%, 100%);
+            --primary: hsl(141, 76%, 48%); /* #1DB954 Spotify Green */
+            --card: hsl(0, 0%, 12%); /* #1E1E1E */
+            --border: hsl(0, 0%, 20%);
+            --muted: hsl(0, 0%, 20%);
+            --muted-foreground: hsl(0, 0%, 70%);
+            --mood-happy: hsl(45, 93%, 58%);
+            --mood-sad: hsl(217, 91%, 60%);
+            --mood-chill: hsl(271, 81%, 66%);
+            --mood-energetic: hsl(25, 95%, 53%);
+        }
+        
+        body {
+            font-family: "Inter", system-ui, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hover-lift {
+            transition: transform 0.2s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Homepage Structure (when not authenticated) -->
+    <div id="homepage" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;">
+        <!-- Logo and Tagline -->
+        <div style="text-align: center; margin-bottom: 48px;">
+            <h1 style="font-size: 6rem; font-weight: bold; margin-bottom: 16px;" class="gradient-text">
+                raken
+            </h1>
+            <p style="font-size: 1.5rem; color: var(--muted-foreground); font-weight: 300;">
+                Sort your music by mood
+            </p>
+        </div>
+
+        <!-- Authentication Buttons -->
+        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 400px;">
+            <button style="background: var(--primary); color: black; font-weight: 600; padding: 16px 32px; border-radius: 9999px; font-size: 1.125rem; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px;" class="hover-lift">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 17.568c-.24.384-.768.512-1.152.24-3.168-1.92-7.152-2.352-11.856-1.296-.456.096-.912-.192-1.008-.648-.096-.456.192-.912.648-1.008 5.088-1.152 9.504-.576 13.056 1.488.384.24.512.768.312 1.224zm1.632-3.624c-.288.48-.912.624-1.392.336-3.624-2.232-9.144-2.88-13.416-1.584-.552.168-1.128-.12-1.296-.672-.168-.552.12-1.128.672-1.296 4.896-1.488 10.968-.768 15.048 1.8.48.288.624.912.384 1.416zm.144-3.768c-4.344-2.592-11.52-2.832-15.672-1.56-.672.216-1.392-.144-1.608-.816-.216-.672.144-1.392.816-1.608 4.752-1.464 12.624-1.176 17.568 1.8.576.336.768 1.08.432 1.656-.336.576-1.08.768-1.536.528z"/>
+                </svg>
+                Connect with Spotify
+            </button>
+            
+            <div style="text-align: center; color: var(--muted-foreground);">or</div>
+            
+            <button style="background: var(--card); color: var(--foreground); font-weight: 600; padding: 16px 32px; border-radius: 9999px; font-size: 1.125rem; border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px;" class="hover-lift">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7,10 12,15 17,10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Import Songs Manually
+            </button>
+        </div>
+
+        <!-- Feature Preview -->
+        <div style="margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 800px; width: 100%;">
+            <div style="text-align: center; padding: 24px;">
+                <div style="width: 48px; height: 48px; background: var(--mood-happy); border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="black">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px;">Mood Detection</h3>
+                <p style="color: var(--muted-foreground);">Automatically classify songs by happiness, energy, and vibe</p>
+            </div>
+            
+            <div style="text-align: center; padding: 24px;">
+                <div style="width: 48px; height: 48px; background: var(--primary); border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="black">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px;">Smart Sorting</h3>
+                <p style="color: var(--muted-foreground);">Organize playlists by mood, energy, tempo, and more</p>
+            </div>
+            
+            <div style="text-align: center; padding: 24px;">
+                <div style="width: 48px; height: 48px; background: var(--mood-chill); border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="black">
+                        <path d="M9 18V5l12-2v13"/>
+                        <circle cx="6" cy="18" r="3"/>
+                        <circle cx="18" cy="16" r="3"/>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px;">Export & Share</h3>
+                <p style="color: var(--muted-foreground);">Create new playlists and export to Spotify or CSV</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Structure (when authenticated) -->
+    <div id="dashboard" style="min-height: 100vh; display: none;">
+        <!-- Sidebar -->
+        <div style="position: fixed; left: 0; top: 0; width: 320px; height: 100vh; background: var(--card); border-right: 1px solid var(--border); padding: 24px;">
+            <!-- Logo -->
+            <h1 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 32px;" class="gradient-text">raken</h1>
+            
+            <!-- Search -->
+            <input type="text" placeholder="Search playlists..." style="width: 100%; padding: 12px 16px 12px 40px; background: var(--background); border: 1px solid var(--border); border-radius: 8px; color: var(--foreground); margin-bottom: 24px;">
+            
+            <!-- Import Button -->
+            <button style="width: 100%; background: var(--primary); color: black; font-weight: 600; padding: 12px 16px; border-radius: 8px; border: none; cursor: pointer; margin-bottom: 24px;">
+                + Import Songs
+            </button>
+            
+            <!-- Playlists List -->
+            <div style="flex: 1; overflow-y: auto;">
+                <h3 style="font-size: 0.875rem; font-weight: 600; color: var(--muted-foreground); text-transform: uppercase; margin-bottom: 12px;">Your Playlists</h3>
+                <!-- Playlist items would be dynamically generated here -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div style="margin-left: 320px; padding: 24px;">
+            <!-- Welcome Section -->
+            <div style="margin-bottom: 32px;">
+                <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 8px;">Welcome to raken</h1>
+                <p style="color: var(--muted-foreground); font-size: 1.125rem;">Your music, organized by mood</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px;">
+                <div style="background: var(--card); border-radius: 12px; padding: 24px; border: 1px solid var(--border);" class="hover-lift">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <div style="width: 40px; height: 40px; background: rgba(29, 185, 84, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)">
+                                <path d="M9 18V5l12-2v13"/>
+                                <circle cx="6" cy="18" r="3"/>
+                                <circle cx="18" cy="16" r="3"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-weight: 600;">Total Playlists</h3>
+                    </div>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--primary);">0</p>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">Ready for mood analysis</p>
+                </div>
+
+                <div style="background: var(--card); border-radius: 12px; padding: 24px; border: 1px solid var(--border);" class="hover-lift">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <div style="width: 40px; height: 40px; background: rgba(255, 193, 7, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="rgb(255, 193, 7)">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="M21 21l-4.35-4.35"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-weight: 600;">Spotify Connected</h3>
+                    </div>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--primary);">✓</p>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">Account synced successfully</p>
+                </div>
+
+                <div style="background: var(--card); border-radius: 12px; padding: 24px; border: 1px solid var(--border);" class="hover-lift">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <div style="width: 40px; height: 40px; background: rgba(255, 87, 34, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="rgb(255, 87, 34)">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-weight: 600;">Manual Imports</h3>
+                    </div>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--primary);">0</p>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">Custom playlists created</p>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="margin-bottom: 32px;">
+                <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 16px;">Quick Actions</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    <button style="background: var(--primary); color: black; padding: 24px; border-radius: 12px; border: none; cursor: pointer; text-align: left;" class="hover-lift">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            <span style="font-size: 1.125rem; font-weight: 600;">Import New Playlist</span>
+                        </div>
+                        <p style="font-size: 0.875rem; opacity: 0.8;">Add songs manually or upload a CSV file</p>
+                    </button>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); padding: 24px; border-radius: 12px; cursor: pointer;" class="hover-lift">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <div style="width: 24px; height: 24px; background: var(--mood-chill); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="rgb(168, 85, 247)">
+                                    <path d="M9 18V5l12-2v13"/>
+                                    <circle cx="6" cy="18" r="3"/>
+                                    <circle cx="18" cy="16" r="3"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 1.125rem; font-weight: 600;">Mood Analytics</span>
+                        </div>
+                        <p style="color: var(--muted-foreground); font-size: 0.875rem;">View detailed mood breakdowns across all playlists</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
